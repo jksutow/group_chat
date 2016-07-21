@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Group Chat</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type ="text/javascript">
+      $(document).ready(function (){
+        // this triggers the connection event in our server!
+        var socket = io.connect();
+
+        var name = prompt("What is your name?");
+        socket.emit('got_a_new_user', {name: name});
+
+
+        socket.on('new_user', function(data){
+          console.log(data.new_user_name);
+        });
+
+      })
+    </script>
+
+  </head>
+  <body>
+    <div class="convo_board">
+      <h1>Conversation Board</h1>
+      <div class="messages">
+        <form class="new_message">
+          <input type="text" name="message" value="Enter message">
+          <input type="submit" name="name" value="Send">
+        </form>
+      </div>
+    </div>
+  </body>
+
+  <style>
+    .chatroom{
+      height: 250px;
+      width: 250px;
+      border: 1px solid black;
+    }
+  </style>
+</html>
